@@ -6,28 +6,26 @@ import { ConfigService } from '@nestjs/config';
 export function setupSwagger(app: INestApplication) {
   const configService = app.get(ConfigService);
 
-  const config = new DocumentBuilder() //Swagger 설정
+  const config = new DocumentBuilder()
     .setTitle('API Docs')
     .setDescription('API documentation with authentication')
     .setVersion('1.0')
-    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
 
-  //Basic Auth 설정
   app.use(
     '/api-docs',
     basicAuth({
       users: {
-        [configService.get('SWAGGER_USERNAME')]:
-          configService.get('SWAGGER_PASSWORD'),
+        [configService.get('SWAGGER_USERNAME') as string]: configService.get(
+          'SWAGGER_PASSWORD',
+        ) as string,
       },
-      challenge: true, //인증창
+      challenge: true,
     }),
   );
 
-  //Swagger UI 설정
   SwaggerModule.setup('api-docs', app, document, {
     swaggerOptions: { defaultModelsExpandDepth: -1 },
   });
