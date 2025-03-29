@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, IsEnum } from 'class-validator';
+import { Region, Radius, Category } from '@prisma/client';
 
 export class SignupDto {
   @ApiProperty()
@@ -15,6 +16,18 @@ export class SignupDto {
   @IsString()
   @IsNotEmpty()
   nickname: string;
+
+  @ApiProperty({ enum: Region })
+  @IsEnum(Region)
+  region: Region;
+
+  @ApiProperty({ enum: Radius })
+  @IsEnum(Radius)
+  radius: Radius;
+
+  @ApiProperty({ enum: Category })
+  @IsEnum(Category)
+  category: Category;
 }
 
 export class LoginDto {

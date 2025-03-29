@@ -12,14 +12,22 @@ export class AuthService {
   ) {}
 
   async signup(signupDto: SignupDto) {
-    const { email, password, nickname } = signupDto;
+    const { email, password, nickname, region, radius, category } = signupDto;
 
-    const salt = await bcrypt.genSalt(10); // salt 생성
-    const hashedPassword = await bcrypt.hash(password, salt); // 비밀번호 해싱
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = await this.prisma.user.create({
-      data: { email, password: hashedPassword, nickname },
+      data: {
+        email,
+        password: hashedPassword,
+        nickname,
+        region,
+        radius,
+        category,
+      },
     });
+
     return { message: 'Signup successful', userId: user.id };
   }
 
