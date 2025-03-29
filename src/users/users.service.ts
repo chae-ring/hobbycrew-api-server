@@ -16,7 +16,6 @@ export class UsersService {
     }
 
     return {
-      email: user.email,
       nickname: user.nickname,
       region: user.region,
       radius: user.radius,

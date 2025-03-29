@@ -11,7 +11,7 @@ import {
 
 @ApiTags('User')
 @Controller('users')
-export class UserController {
+export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   // 사용자 정보 조회
