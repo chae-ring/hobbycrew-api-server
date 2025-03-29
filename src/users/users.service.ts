@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma.service';
 import { GetUserDto } from '../dto/user.dto';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   async getUserInfo(userId: number): Promise<GetUserDto> {
