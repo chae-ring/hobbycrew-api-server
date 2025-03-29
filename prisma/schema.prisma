@@ -14,13 +14,15 @@ datasource db {
 }
 
 model User {
-  id            Int        @id @unique @default(autoincrement())
-  email         String         @unique
-  password      String
-  nickname      String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  tokens        Token[]
+  id        Int       @id @unique @default(autoincrement())
+  email     String    @unique
+  password  String
+  nickname  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  tokens    Token[]
+  posts     Board[]
+  comments  Comment[]
 }
 
 model Token {
@@ -29,4 +31,35 @@ model Token {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  post      Board    @relation(fields: [postId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Board {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  title     String
+  content   String
+  category  Category
+  location  String? // "위도,경도" 형태
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  comments  Comment[]
+}
+
+enum Category {
+  운동
+  스터디
+  취미
+  기타
 }

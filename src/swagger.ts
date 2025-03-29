@@ -14,17 +14,17 @@ export function setupSwagger(app: INestApplication) {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  app.use(
-    '/api-docs',
-    basicAuth({
-      users: {
-        [configService.get('SWAGGER_USERNAME') as string]: configService.get(
-          'SWAGGER_PASSWORD',
-        ) as string,
-      },
-      challenge: true,
-    }),
-  );
+  // app.use(
+  //   '/api-docs',
+  //   basicAuth({
+  //     users: {
+  //       [configService.get('SWAGGER_USERNAME') as string]: configService.get(
+  //         'SWAGGER_PASSWORD',
+  //       ) as string,
+  //     },
+  //     challenge: true,
+  //   }),
+  // );
 
   SwaggerModule.setup('api-docs', app, document, {
     swaggerOptions: { defaultModelsExpandDepth: -1 },
