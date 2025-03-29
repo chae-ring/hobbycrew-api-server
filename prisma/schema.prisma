@@ -12,14 +12,46 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+enum Category {
+  운동
+  게임
+  여행
+  공부
+  음악
+  diy
+  미디어
+  기타
+}
+
+enum Radius {
+  OneKm
+  FiveKm
+  TenKm
+}
+
+enum Region {
+  서울
+  부산
+  대구
+  인천
+  광주
+  대전
+  울산
+  경기
+  강원
+  제주
+}
 
 model User {
   id            Int        @id @unique @default(autoincrement())
   email         String         @unique
   password      String
   nickname      String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  region        Region     @default(서울)
+  radius        Radius     @default(OneKm)
+  category      Category   @default(운동)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   tokens        Token[]
 }
 
