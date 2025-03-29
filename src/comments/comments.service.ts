@@ -1,23 +1,16 @@
-import { Injectable } from "@nestjs/common";
+import { Body, Injectable } from "@nestjs/common";
 import { CreateCommentDto } from "src/dto/create-comment.dto";
 import { UpdateCommentDto } from "src/dto/update-comment.dto";
 import { PrismaService } from "src/prisma.service";
+import { RequestUser } from "src/request-user.decorator";
 
 @Injectable()
 export class CommentsService {
+  commentsService: any;
   constructor(private prisma: PrismaService) {}
 
-  create(body: CreateCommentDto, data: CreateCommentDto & { userId: any; }) {
-    return this.prisma.comment.create({
-      data: {
-        postId: data.postId,
-        content: data.content,
-        user: {
-          connect: { id: data.userId }, 
-        },
-        
-      },
-    });
+  create(@Body() body: CreateCommentDto, @RequestUser() user) {
+    return this.commentsService.create({ ...body, userId: user.id });
   }
   
 

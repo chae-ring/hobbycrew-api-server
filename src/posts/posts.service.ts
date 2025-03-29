@@ -1,26 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { CreatePostDto } from 'src/dto/create-post.dto';
 import { UpdatePostDto } from 'src/dto/update-post.dto';
 import { PrismaService } from 'src/prisma.service';
+import { RequestUser } from 'src/request-user.decorator';
 
 @Injectable()
 export class PostsService {
+  postsService: any;
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreatePostDto, userId: any) {
-    return this.prisma.board.create({ 
-      data: {
-        title: data.title,
-        content: data.content,
-        category: data.category,
-        location: data.location,
-        user: {
-          connect: { id: userId },
-        },
-
-     }
-    });
-  }
+  create(@Body() body: CreatePostDto, @RequestUser() user) {
+      return this.postsService.create({ ...body, userId: user.id });
+    }
 
   findAll() {
     return this.prisma.board.findMany({

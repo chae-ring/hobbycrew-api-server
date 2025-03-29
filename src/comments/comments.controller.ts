@@ -4,6 +4,7 @@ import { CreateCommentDto } from "src/dto/create-comment.dto";
 import { UpdateCommentDto } from "src/dto/update-comment.dto";
 import { BearerGuard } from "src/bearer.guard";
 import { Request } from '@nestjs/common';
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 
 @Controller('comments')
@@ -12,6 +13,7 @@ export class CommentsController {
   
   // 댓글 생성
   @UseGuards(BearerGuard)
+  @ApiBearerAuth()
   @Post('create')
   create(@Body() body: CreateCommentDto, @Request() req) {
     const userId = req.user.id;

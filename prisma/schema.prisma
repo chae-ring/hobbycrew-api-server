@@ -21,6 +21,8 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   tokens    Token[]
+  Comment   Comment[]
+  Board     Board[]
 }
 
 model Token {
@@ -28,22 +30,23 @@ model Token {
   token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(references: [id], fields: [userId])
 }
 
 model Comment {
   id        Int      @id @default(autoincrement())
   postId    Int
   post      Board    @relation(fields: [postId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(references: [id], fields: [userId])
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  userId    Int
 }
 
 model Board {
   id        Int       @id @default(autoincrement())
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(references: [id], fields: [userId])
   title     String
   content   String
   category  Category
@@ -51,6 +54,7 @@ model Board {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   comments  Comment[]
+  userId    Int
 }
 
 enum Category {
