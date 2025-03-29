@@ -1,15 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { CommentsService } from "./comments.service";
 import { CreateCommentDto } from "src/dto/create-comment.dto";
 import { UpdateCommentDto } from "src/dto/update-comment.dto";
+import { BearerGuard } from "src/bearer.guard";
+import { Request } from '@nestjs/common';
 
+
+@UseGuards(BearerGuard)
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
   
   // 댓글 생성
   @Post('create')
-  create(@Body() body: CreateCommentDto) {
+  create(@Body() body: CreateCommentDto, @Request() req) {
+    const userId = req.user.id;
     return this.commentsService.create(body);
   }
 

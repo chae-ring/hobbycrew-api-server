@@ -7,8 +7,19 @@ import { PrismaService } from 'src/prisma.service';
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreatePostDto) {
-    return this.prisma.board.create({ data });
+  create(data: CreatePostDto, userId: any) {
+    return this.prisma.board.create({ 
+      data: {
+        title: data.title,
+      content: data.content,
+      category: data.category,
+      location: data.location,
+      user: {
+        connect: { id: userId },
+      },
+
+     }
+    });
   }
 
   findAll() {
