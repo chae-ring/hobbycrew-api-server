@@ -16,13 +16,14 @@ export class AuthController {
   async signup(@Body() signupDto: SignupDto, @Res() res: Response) {
     try {
       const result = await this.authService.signup(signupDto);
-      // 성공 시 201 상태 코드로 응답
       return res.status(HttpStatus.CREATED).json({
         message: result.message,
         userId: result.userId,
       });
     } catch (error) {
-      // 오류 발생 시 400 상태 코드로 응답
+      // 🔥 에러 콘솔에 찍기 (로그 확인용)
+      console.error('❌ 회원가입 에러:', error);
+
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: 'Signup failed',
         error: error.message,
