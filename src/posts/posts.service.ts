@@ -11,12 +11,12 @@ export class PostsService {
     return this.prisma.board.create({ 
       data: {
         title: data.title,
-      content: data.content,
-      category: data.category,
-      location: data.location,
-      user: {
-        connect: { id: userId },
-      },
+        content: data.content,
+        category: data.category,
+        location: data.location,
+        user: {
+          connect: { id: userId },
+        },
 
      }
     });

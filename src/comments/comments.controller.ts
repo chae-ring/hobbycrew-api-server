@@ -6,16 +6,16 @@ import { BearerGuard } from "src/bearer.guard";
 import { Request } from '@nestjs/common';
 
 
-@UseGuards(BearerGuard)
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
   
   // 댓글 생성
+  @UseGuards(BearerGuard)
   @Post('create')
   create(@Body() body: CreateCommentDto, @Request() req) {
     const userId = req.user.id;
-    return this.commentsService.create(body);
+    return this.commentsService.create(body, userId);
   }
 
   // 댓글 목록 조회

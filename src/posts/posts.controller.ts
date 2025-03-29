@@ -12,8 +12,8 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
   
   // 게시글 작성
-  @Post('create')
   @UseGuards(BearerGuard)
+  @Post('create')
   create(@Body() body: CreatePostDto, @Request() req) {
     const userId = req.user.id;
     return this.postsService.create(body, userId);

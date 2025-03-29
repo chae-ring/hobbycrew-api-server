@@ -7,9 +7,19 @@ import { PrismaService } from "src/prisma.service";
 export class CommentsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreateCommentDto) {
-    return this.prisma.comment.create({ data });
+  create(body: CreateCommentDto, data: CreateCommentDto & { userId: any; }) {
+    return this.prisma.comment.create({
+      data: {
+        postId: data.postId,
+        content: data.content,
+        user: {
+          connect: { id: data.userId }, 
+        },
+        
+      },
+    });
   }
+  
 
   findByPost(postId: number) {
     return this.prisma.comment.findMany({

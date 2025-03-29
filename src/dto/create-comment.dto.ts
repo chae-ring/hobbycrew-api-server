@@ -6,9 +6,9 @@ export class CreateCommentDto {
   @IsInt()
   postId: number;
 
-  @ApiProperty()
-  @IsInt()
-  userId: number;
+  // @ApiProperty()
+  // @IsInt()
+  // userId: number;
 
   @ApiProperty()
   @IsString()
