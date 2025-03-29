@@ -5,11 +5,6 @@ import { PrismaService } from './prisma.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    orgin: 'http://localhost:3000',
-    //origin: 'http://ec2-3-34-6-208.ap-northeast-2.compute.amazonaws.com',
-    credentials: true,
-  });
 
   setupSwagger(app); //Swagger 문서를 생성
   const prismaService = app.get(PrismaService);
