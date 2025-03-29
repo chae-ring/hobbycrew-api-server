@@ -10,6 +10,6 @@ async function bootstrap() {
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
-  await app.listen(3000); //포트 3000에서 HTTP 요청을 수신하도록 설정
+  await app.listen(3000, '0.0.0.0'); //포트 3000에서 HTTP 요청을 수신하도록 설정
 }
 bootstrap();
