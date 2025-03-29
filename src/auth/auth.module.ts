@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-
 import { AuthService } from './auth.service';
+import { BearerGuard } from 'src/bearer.guard';
 
 @Module({
   imports: [
@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, BearerGuard],
+  exports: [AuthService, JwtModule], // ❌ JwtService 제거
 })
 export class AuthModule {}
